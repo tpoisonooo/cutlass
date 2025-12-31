@@ -948,6 +948,32 @@ struct DefaultGemmConfiguration<
   using Operator = arch::OpMultiplyAddComplex;
 };
 
+template <>
+struct DefaultGemmConfiguration<
+    arch::OpClassTensorOp, 
+    arch::Sm90, 
+    cutlass::half_t,
+    cutlass::half_t, 
+    cutlass::half_t,
+    cutlass::half_t
+  > {
+
+  static int const kAlignmentA = 128 / sizeof_bits<cutlass::half_t>::value;
+  static int const kAlignmentB = 128 / sizeof_bits<cutlass::half_t>::value;
+
+  
+  using ThreadblockShape = GemmShape<64, 64, 16>;
+  using WarpShape = GemmShape<32, 32, 16>;
+  using InstructionShape = GemmShape<16, 8, 4>;
+  static int const kStages = 2;
+
+  using EpilogueOutputOp = epilogue::thread::LinearCombination<
+      cutlass::half_t, 1, cutlass::half_t,
+      cutlass::half_t>;
+
+  using Operator = arch::OpMultiplyAdd;
+};
+
 } // namespace device
 } // namespace gemm
 } // namespace cutlass

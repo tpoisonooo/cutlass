@@ -41,6 +41,8 @@ int testRun(int arch, std::vector<bool (*)()> & test_funcs, const std::string & 
   int arch_major = arch / 10;
   int arch_minor = arch - arch / 10 * 10;  
 
+  std::cout << "arch_major " << arch_major  << "arch_minor " << arch_minor << std::endl; 
+
   if(arch_major >= 8) {
     // Ampere Tensor Core operations exposed with mma.sync are first available in CUDA 11.0.
     //
