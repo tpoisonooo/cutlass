@@ -78,7 +78,7 @@ public:
   // Define a 'FragmentIterator' to iterate over slices of accumulators
   using FragmentIterator = cutlass::epilogue::warp::FragmentIteratorTensorOp<
     typename MmaWarp::Shape,
-    InstructionShape,
+    typename MmaWarp::InstructionShape,
     double,
     typename MmaWarp::Policy::Operator::FragmentC,
     cutlass::layout::RowMajor
@@ -87,7 +87,7 @@ public:
   // Define an epilogue 'Tile Iteterator' to iterate over slices of elements in Shared Memory
   using AccumulatorTileIterator = cutlass::epilogue::warp::TileIteratorTensorOpCanonical<
     typename MmaWarp::Shape,
-    InstructionShape,
+    typename MmaWarp::InstructionShape,
     double,
     cutlass::layout::RowMajor
   >;
